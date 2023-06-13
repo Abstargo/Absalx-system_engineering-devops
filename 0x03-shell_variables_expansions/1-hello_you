@@ -1,2 +1,2 @@
 #!/bin/bash
-Hello $(whoami)!
+echo "hello $USER"
