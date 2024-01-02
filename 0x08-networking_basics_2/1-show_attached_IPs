@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# This script displays all IPv4 IPs on the machine it's executed on
-ip -4 -o addr show | awk '{print $4}' | cut -d "/" -f 1
