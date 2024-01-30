@@ -1,5 +1,5 @@
 # 1. Distributed web infrastructure
-![]()
+![](https://github.com/Abstargo/alx-system_engineering-devops/blob/main/0x09-web_infrastructure_design/1-distributed_web_infrastructure.PNG)
 
 ## Specifics About This Infrastrucure
 
