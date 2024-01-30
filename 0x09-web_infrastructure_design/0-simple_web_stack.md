@@ -41,7 +41,7 @@
 1. ## Single Point Failure (SPOF):
    - The entire infrastructure relies on a single server (8.8.8.8), which is a potential single point of failure. If the server goes down, the entire website becomes inaccessible.
 
-2. ## Downtime during Maintenance:
+## 2.  Downtime during Maintenance:
    - Deploying new code or performing maintenance tasks may require restarting the web server. During this time, the website may experience downtime.
 
 3. ## Scaling Limitations:
