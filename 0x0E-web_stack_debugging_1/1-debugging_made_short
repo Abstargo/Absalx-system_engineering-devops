@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# configures a server to listening on port 80 of all servers active IPv4 IPs
-
-sudo sed -i "s/8080/80/" /etc/nginx/sites-enabled/default
+# same as task 0 but -f added to ln to forcefully remove the file if it exists
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx restart
-echo "" | sudo dd status=none of=/run/nginx.pid
-
+rm /run/nginx.pid
