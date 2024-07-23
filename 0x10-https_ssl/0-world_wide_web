@@ -1,46 +1,29 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# A Bash script that will display information about the subdomains
 
-# Function to get subdomain information
-get_subdomain_info() {
-    local domain=$1
-    local subdomain=$2
+# Check if at least one argument is provided
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 domain [subdomain1 subdomain2 ...]"
+  exit 1
+fi
 
-    # Retrieve DNS record details using dig
-    record=$(dig +short "${subdomain}.${domain}")
+# Set domain name
+domain="$1"
 
-    if [ -z "$record" ]; then
-        echo "The subdomain ${subdomain} does not exist."
-        return
-    fi
+# Set subdomains to query
+subdomains=("www" "lb-01" "web-01" "web-02")
 
-    # Determine the record type
-    record_type=$(dig +short -t ANY "${subdomain}.${domain}" | awk '{print $4}' | head -n 1)
+# If additional subdomains are provided as arguments, add them to the subdomains array
+if [ $# -gt 1 ]; then
+  subdomains+=("${@:2}")
+fi
 
-    # Output the result
-    echo "The subdomain ${subdomain} is a ${record_type} record and points to ${record}"
-}
-
-# Main script logic
-main() {
-    local domain=$1
-    local subdomain=$2
-
-    if [ -z "$domain" ]; then
-        echo "Domain parameter is mandatory"
-        exit 1
-    fi
-
-    if [ -z "$subdomain" ]; then
-        # Default subdomains to check
-        subdomains=("www" "lb-01" "web-01" "web-02")
-        for sub in "${subdomains[@]}"; do
-            get_subdomain_info "$domain" "$sub"
-        done
-    else
-        get_subdomain_info "$domain" "$subdomain"
-    fi
-}
-
-# Ignore shellcheck case SC2086
-main $@
-
+# Loop through subdomains and display information
+for subdomain in "${subdomains[@]}"; do
+  output=$(dig "$subdomain.$domain" +short)
+  if [ -n "$output" ]; then
+    echo "The subdomain $subdomain has IP address $output"
+  else
+    echo "The subdomain $subdomain does not exist"
+  fi
+done
